@@ -1,0 +1,142 @@
+{% extends "layout.html" %}
+{% block pre_header %}
+<div id="pair_bar">
+<div id="label_container">
+<img src="/images/pair_label.png" id="pair_label" />
+<img src="/images/layer_label.png" id="layers_label" />
+</div>
+<div id="pair_back">
+
+<table id="pairs">
+<tr><td><button id="add_pair">Add Pair</button></td></tr>
+</table>
+
+<table id="layers">
+<tr class="first"><td></td><td></td></tr>
+<tr><td>Base Map</td><td>
+	<select id="base_map">
+	    <option>Oceans</option>
+		<option>Gray</option>
+		<option>Streets</option>
+		<option>Topographic</option>
+		<option>OceansLabels</option>
+		<option>NationalGeographic</option>
+		<option>GrayLabels</option>
+		<option>DarkGray</option>
+		<option>DarkGrayLabels</option>
+		<option>Imagery</option>
+		<option>ImageryLabels</option>
+		<option>ImageryTransportation</option>
+		<option>ShadedRelief</option>
+		<option>ShadedReliefLabels</option>
+		<option>Terrain</option>
+		<option>TerrainLabels</option>
+		<option>USATopo</option>
+	</select> 
+</td></tr>
+<tr><td>Bathymetric Contours:</td><td><input class="map_layer" id="bath" type="checkbox" /></td></tr>
+<tr><td>CSRB Units:</td> <td> <input class="map_layer" id="csrb" type="checkbox" /></td></tr>
+<tr><td>Refuges:</td><td> <input class="map_layer" id="refuges" type="checkbox" /></td></tr>
+<tr><td>Watersheds:</td><td><input class="map_layer" id="watersheds" type="checkbox" /></td></tr>
+<tr class="last"><td>Wetlands:</td><td><input class="map_layer" id="wetlands" type="checkbox" /></td></tr>
+</table>
+
+</div>
+</div>
+
+{% endblock %}
+
+{% block content %}
+<div id="sidebar">
+<div id="side_container">
+<h3>Choose Event</h3>
+
+<select id="storm_event">
+<option value="ny">Hurricane Hermine: CT/NY</option>
+<option value="nc">Hurricane Matthew: NC</option>
+</select>
+
+<h3>Time Options</h3>
+<form id="graphForm">
+<table>
+<tr><td>Timezone:</td><td>
+<select id="timezone" >
+<option>GMT</option>
+<option>EST</option>
+<option>PDT</option>
+</select>
+</td></tr>
+<tr><td>DST:</td><td><input type="checkbox" id="dst" /></td></tr>
+<tr><td>Start Time:</td><td><input type="text" id="start_date" value="2016/09/01 17:00"/></td></tr>
+<tr><td>End Time:</td><td><input type="text" id="end_date" value="2016/09/10 12:00"/></td></tr>
+<tr><td></td><td><button>Submit</button></td></tr>
+</table>
+</form>
+</div>
+<div id="loading">
+<div id="slideLoad">
+<p id="loading_text">Loading...</p> <img id="loading_image" src="./images/loading.gif" />
+</div>
+</div>
+</div>
+
+
+
+<div id="mainGraph">
+
+<h1 id="event_title">Hurricane Hermine: Connecticut and New York</h1>
+
+<div style="display:block">
+
+<div class="map_tile_full">
+<div class="dash_title">Instrument Locations</div>
+<div style="width:960px;height:396px" id="multi_map" class="dash_content"></div>
+</div>
+
+<div id="multi_raw" class="dash_tile2">
+<div class="dash_title">Raw Water Level in Feet 
+<button class="expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button>
+</div>
+<svg id="visualization1" width="440" height="440"></svg>
+</div>
+
+
+<div id="multi_surge" class="dash_tile2">
+<div class="dash_title">Surge Water Level in Feet
+<button class="expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button>
+</div>
+<svg id="visualization2" width="440" height="440"></svg>
+</div>
+
+<div id="multi_wave" class="dash_tile2">
+<div class="dash_title">Wave Water Level in Feet
+<button class="expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button>
+</div>
+<svg id="visualization3" width="440" height="440"></svg>
+</div>
+
+<div id="multi_baro" class="dash_tile2">
+<div class="dash_title">Baro. Pressure in Inches of Hg
+<button class="expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button>
+</div>
+<svg id="visualization4" width="440" height="440"></svg>
+</div>
+
+<div id="wind" class="dash_tile2">
+<div class="dash_title">Wind Speed and Direction
+<button class="wind_expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button>
+</div>
+<svg id="visualization5" width="440" height="440"></svg>
+</div>
+
+</div>
+</div>
+
+<script src="js/dashboards/multi_dash2.js" charset="utf-8"></script>
+<script src="js/dashboards/til.js" charset="utf-8"></script>
+{% endblock %}

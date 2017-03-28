@@ -1,0 +1,56 @@
+{% extends "layout.html" %}
+{% block pre_header %}
+{% endblock %}
+
+{% block content %}
+
+<div id="sidebar">
+<div id="side_container">
+<h3>Time Options</h3>
+<form id="graphForm">
+<table>
+<tr><td>Timezone:</td><td>
+<select id="timezone" >
+<option>GMT</option>
+<option>EST</option>
+<option>PDT</option>
+</select>
+</td></tr>
+<tr><td>DST:</td><td><input type="checkbox" id="dst" /></td></tr>
+<tr><td>Start Time:</td><td><input type="text" id="start_date" value="2016/10/6 17:00"/></td></tr>
+<tr><td>End Time:</td><td><input type="text" id="end_date" value="2016/10/12 12:00"/></td></tr>
+<tr><td></td><td><button>Submit</button></td></tr>
+</table>
+</form>
+</div>
+<div id="loading">
+<div id="slideLoad">
+<p id="loading_text">Loading...</p> <img id="loading_image" src="./images/loading.gif" />
+</div>
+</div>
+</div>
+
+<div id="mainGraph">
+
+<h1>Spectra Dashboard</h1>
+
+<div id="dash1" class="dash_tile3">
+<div class="dash_title">Contours of Power Spectral Density
+<button style="margin-left: 15px" class="image">Save Image</button></div>
+<svg id="visualization1" class="psd_contour" width="960" height="640" 
+xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+</svg>
+</div>
+
+<div id="dash2" class="dash_tile2">
+<div class="dash_title">Spectral Estimates</span> <button class="expand">Expand</button>
+<button style="margin-left: 15px" class="image">Save Image</button></div>
+<svg id="visualization2" width="440" height="440" 
+xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" >
+</svg>
+</div>
+
+</div>
+
+<script src="js/dashboards/spectra.js" charset="utf-8"></script>
+{% endblock %}

@@ -1,47 +1,65 @@
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
+# Ignore history files spit out by the GUIs
+history*.json
 
-# Folder config file
-Desktop.ini
+# Ignore net cdf files and csv files
+*.nc
+*.csv
 
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
+# Eclipse things
+.metadata/
+.settings/
+.project
+.pydevproject
 
-# Windows Installer files
-*.cab
-*.msi
-*.msm
-*.msp
+# Some kind of project data
+RemoteSystemsTempFiles/
 
-# Windows shortcuts
-*.lnk
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[co]
 
-# =========================
-# Operating System Files
-# =========================
+# C extensions
+*.so
 
-# OSX
-# =========================
+# Distribution / packaging
+.Python
+env/
+build/
+develop-eggs/
+dist/
+eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+*.egg-info/
+.installed.cfg
+*.egg
 
-.DS_Store
-.AppleDouble
-.LSOverride
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
 
-# Thumbnails
-._*
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.coverage
+.cache
+nosetests.xml
+coverage.xml
 
-# Files that might appear in the root of a volume
-.DocumentRevisions-V100
-.fseventsd
-.Spotlight-V100
-.TemporaryItems
-.Trashes
-.VolumeIcon.icns
+# Translations
+*.mo
+*.pot
 
-# Directories potentially created on remote AFP share
-.AppleDB
-.AppleDesktop
-Network Trash Folder
-Temporary Items
-.apdisk
+# Django stuff:
+*.log
+
+# Sphinx documentation
+docs/_build/
+
+# Emacs
+*~
+\#*
+.\#*

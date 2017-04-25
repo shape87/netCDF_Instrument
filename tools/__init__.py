@@ -1,2 +1,2 @@
-from tools.storm_options import StormOptions
-from tools.storm_data import StormData
+import tools.storm_options as storm_options
+import tools.storm_data as storm_data

@@ -6,7 +6,7 @@ import pytz
 from datetime import datetime
 from tools.storm_options import StormOptions
 import json
-from pydap.client import open_url
+from pydap2.client import open_url
 import requests
 
 app = Flask(__name__)
@@ -410,5 +410,6 @@ def wind():
     return jsonify(**wind)
 
 app.secret_key = os.urandom(24)
-app.run()
     
+if __name__ == '__main__':
+    app.run()

@@ -694,9 +694,9 @@ $('.wind_expand').click(function(){
 				html = html + '<option value="' + markers[i*2+1].station_id + '">' + (i+1) + '</option>'
 			}
 			html = html + '</select></td></tr>'
-			html = html + '<tr class="pair_data' + pair_index + '"><td>Sea <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td>'
-			html = html + '<td>Air <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td>'
-			html = html + '<td>Graph <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td></tr>'
+			html = html + '<tr class="pair_data' + pair_index + '"><td>Sea <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td>'
+			html = html + '<td>Air <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td>'
+			html = html + '<td>Graph <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td></tr>'
 			html = html + '<tr class="pair_data' + pair_index + '"><td><b><u>Details</u></b></td></tr>'
 			html = html + '<tr class="pair_data' + pair_index + '">'
 			html = html + '<td><a class="data_link" href="http://localhost:8080/single_data?s=0&b=0">Single</a></td>'

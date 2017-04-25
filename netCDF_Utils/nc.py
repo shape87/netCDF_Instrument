@@ -2,24 +2,18 @@
 A few convenience methods for quickly extracting/changing data in
 netCDFs
 """
-import os
 from datetime import datetime
 import numpy as np
-from netCDF4 import Dataset
-from netCDF4 import num2date
-import uuid
 # import netCDF4_utils, netcdftime # these make cx_freeze work
 import pytz
-import unit_conversion
-from pydap.client import open_url
-import threading
+from pydap2.client import open_url, open_dods
+# from pathos.multiprocessing import ProcessingPool as Pool
+#from multiprocessing import Pool
 # Constant
-
+import itertools
 FILL_VALUE = -1e10
-
+import threading
 # Utility methods
-
-  
 
 
 def parse_time(fname, time_name):
@@ -127,54 +121,54 @@ def get_device_depth(fname, ds):
 
 def get_variable_data(query, variable_name, ds):
     """Get the values of a variable from a netCDF file."""
-    myDict = {}
-    
-    class myThread (threading.Thread):
-        def __init__(self, threadID, sst, idx, val_dict):
-            threading.Thread.__init__(self)
-            self.threadID = threadID
-            self.sst = sst
-            self.idx = idx
-            self.val_dict = val_dict
-            self._return = None
-            
-        def run(self):
-            self._return = (self.threadID, get_val(self.threadID, self.sst, self.idx))
-            
-        def join(self):
-            threading.Thread.join(self)
-            return self._return
-        
-    def get_val(t_id, data, idx): 
-        return data[idx[0]:idx[1]] 
+#     myDict = {}
+#     
+#     class myThread (threading.Thread):
+#         def __init__(self, threadID, sst, idx, val_dict):
+#             threading.Thread.__init__(self)
+#             self.threadID = threadID
+#             self.sst = sst
+#             self.idx = idx
+#             self.val_dict = val_dict
+#             self._return = None
+#             
+#         def run(self):
+#             self._return = (self.threadID, get_val(self.threadID, self.sst, self.idx))
+#             
+#         def join(self):
+#             threading.Thread.join(self)
+#             return self._return
+#         
+#     def get_val(t_id, data, idx): 
+#         return data[idx[0]:idx[1]] 
    
     var = ds[variable_name]
     
-    if variable_name in ['latitude', 'longitude']:
-        return var[:]
+#     if variable_name in ['latitude', 'longitude']:
+    return var[:]
     
-    space = np.linspace(0,var.shape[0],100).astype(np.int)
-    idx = []
-    for x in range(0,len(space)-1):
-        idx.append([space[x],space[x+1]])
-        
-    
-    threads = []
-    for i in range(len(idx)):
-        a = myThread(i, var, idx[i], myDict)
-        threads.append(a)
-        a.start()
-      
-    for x in threads:
-        vals = x.join()
-        myDict[str(vals[0])] = vals[1]
-        
-    vals = []
-    
-    for i in range(len(idx)):
-        vals.append(myDict[str(i)])
-        
-    return np.concatenate(vals)
+#     space = np.linspace(0,var.shape[0],21).astype(np.int)
+#     idx = []
+#     for x in range(0,len(space)-1):
+#         idx.append([space[x],space[x+1]])
+#         
+#     
+#     threads = []
+#     for i in range(len(idx)):
+#         a = myThread(i, var, idx[i], myDict)
+#         threads.append(a)
+#         a.start()
+#       
+#     for x in threads:
+#         vals = x.join()
+#         myDict[str(vals[0])] = vals[1]
+#         
+#     vals = []
+#     
+#     for i in range(len(idx)):
+#         vals.append(myDict[str(i)])
+#         
+#     return np.concatenate(vals)
      
 def get_variable_attr(query, variable_name, attr, ds):
     """Get the values of a variable from a netCDF file."""

@@ -280,8 +280,12 @@ class StormOptions(StormData):
             self.get_wind_speed()
 #             self.get_wind_direction()
             
-            self.wind_time[np.where(self.wind_time < self.sea_time[0])] = np.NaN
-            self.wind_time[np.where(self.wind_time > self.sea_time[-1])] = np.NaN
+            
+            earlier = np.where(self.wind_time < self.sea_time[0])
+            after = np.where(self.wind_time > self.sea_time[-1])
+            self.wind_time[earlier] = np.NaN
+            self.wind_time[after] = np.NaN
+            
             wind_itemindex = np.where(~np.isnan(self.wind_time))
             
             wind_begin = wind_itemindex[0][0]

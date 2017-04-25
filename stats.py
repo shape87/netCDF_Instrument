@@ -157,13 +157,13 @@ class Stats(object):
         '''method from NDBC Technical document to return confidence intervals for 
         spectral estimates'''
         
-        dataframe = pd.read_csv('chi2_approx.csv')
+        dataframe = pd.read_csv('/opt/django/webapps/pubs_ui/netCDF_Instrument/chi2_approx.csv')
         
-        first_ci = '%.3f' % ((1 - ci)/2.0)
+        first_ci = '%.3f' % ((1 + ci)/2.0)
        
         chi1 = dataframe[first_ci][dataframe['n'] == df].values[0]
         
-        last_ci = '%.3f' % ((1 + ci)/2.0)
+        last_ci = '%.3f' % ((1 - ci)/2.0)
        
        
         chi2 = dataframe[last_ci][dataframe['n'] == df].values[0]

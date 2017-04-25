@@ -1,7 +1,7 @@
 
 $(function() {
 	
-	var idx = window.location.href.indexOf('/');
+	var idx = window.location.href.lastIndexOf('/');
 	var url = window.location.href.substring(0,idx);
 	
 	var bounds = null;
@@ -408,7 +408,7 @@ $(function() {
 			//get lat lon
 			myLatLng = {lat: data[i].lat, lng: data[i].lon};
 			
-			icon =  './images/sea.png';
+			icon =  'images/sea.png';
 				
 			//initialize with sea pressure station options
 			type= 'sea';
@@ -949,6 +949,7 @@ $(function() {
 		final_data = [];
 		count = 0;
 		
+		//I need to change this to one request for the CIDA hosted version
 		for(var i = 0; i < current_pairs.length; i++)
 		{
 			ajax_post(current_pairs[i], 0, i);
@@ -1100,15 +1101,15 @@ $(function() {
 				html = html + '<option value="' + markers[i*2+1].station_id + '">' + (i+1) + '</option>';
 			}
 			html = html + '</select></td></tr>';
-			html = html + '<tr class="pair_data' + pair_index + '"><td>Sea <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td>';
-			html = html + '<td>Air <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td>';
-			html = html + '<td>Graph <img style="height: 10px; width: 10px" src="./images/sea_' + colors[color_index] + '.png"/></td></tr>';
+			html = html + '<tr class="pair_data' + pair_index + '"><td>Sea <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td>';
+			html = html + '<td>Air <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td>';
+			html = html + '<td>Graph <img style="height: 10px; width: 10px" src="images/sea_' + colors[color_index] + '.png"/></td></tr>';
 			html = html + '<tr class="pair_data' + pair_index + '"><td><b><u>Details</u></b></td></tr>';
 			html = html + '<tr class="pair_data' + pair_index + '">';
-			html = html + '<td><a class="data_link" href="/single_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Single</a></td>';
-			html = html + '<td><a class="data_link" href="/stat_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Statistics</a></td>';
+			html = html + '<td><a class="data_link" href="single_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Single</a></td>';
+			html = html + '<td><a class="data_link" href="stat_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Statistics</a></td>';
 			html = html + '<td></td><td style="text-align:right">';
-			html = html + '<a class="data_link" href="/spectra_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Spectra</a></td>';
+			html = html + '<a class="data_link" href="spectra_data?s=' + stations[0].query + '&b=' + stations[0].query + '&e=' + $('#storm_event').val() + '">Spectra</a></td>';
 			html = html + '</tr><tr class="pair_data' + pair_index + ' last"><td colspan="4" style="text-align:right">';
 			html = html + '<button id="'+ pair_index + '" class="remove_pair">Remove</button></td></tr>';
 				

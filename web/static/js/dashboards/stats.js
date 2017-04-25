@@ -16,11 +16,11 @@ $(function() {
 	}
 	else
 	{
-		$("#start_date").val('2016/01/22 17:00')
-		$("#end_date").val('2016/01/26 12:00')
+		$("#start_date").val('2016/09/01 17:00')
+		$("#end_date").val('2016/09/10 12:00')
 	}
 	
-	var idx = window.location.href.indexOf('/');
+	var idx = window.location.href.indexOf('/stat_data');
 	var url = window.location.href.substring(0,idx);
 	console.log(url)
 	

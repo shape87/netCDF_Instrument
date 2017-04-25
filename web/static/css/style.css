@@ -356,7 +356,7 @@ svg.psd_contour:active {
 #pair_back
 {
 	margin-left: 51px;
-	background-image: url("/images/pair_back.png");
+	background-image: url("../images/pair_back.png");
 	background-repeat: repeat-y;
 	width: 268px;
 	height: 8000px;
@@ -432,55 +432,55 @@ svg.psd_contour:active {
 	padding-top: 5px;
 	padding-left: 5px;
 	padding-right: 5px;
-	background-image: url("/images/wind.png")
+	background-image: url("../images/wind.png")
 }
 
 .sea
 {
-	background-image: url("/images/sea.png")
+	background-image: url("../images/sea.png")
 }
 .sea_red
 {
-	background-image: url("/images/sea_red.png")
+	background-image: url("../images/sea_red.png")
 }
 .sea_green
 {
-	background-image: url("/images/sea_green.png")
+	background-image: url("../images/sea_green.png")
 }
 .sea_blue
 {
-	background-image: url("/images/sea_blue.png")
+	background-image: url("../images/sea_blue.png")
 }
 .sea_purple
 {
-	background-image: url("/images/sea_purple.png")
+	background-image: url("../images/sea_purple.png")
 }
 .sea_orange
 {
-	background-image: url("/images/sea_orange.png")
+	background-image: url("../images/sea_orange.png")
 }
 
 .air
 {
-	background-image: url("/images/air.png")
+	background-image: url("../images/air.png")
 }
 .air_red
 {
-	background-image: url("/images/air_red.png")
+	background-image: url("../images/air_red.png")
 }
 .air_green
 {
-	background-image: url("/images/air_green.png")
+	background-image: url("../images/air_green.png")
 }
 .air_blue
 {
-	background-image: url("/images/air_blue.png")
+	background-image: url("../images/air_blue.png")
 }
 .air_purple
 {
-	background-image: url("/images/air_purple.png")
+	background-image: url("../images/air_purple.png")
 }
 .air_orange
 {
-	background-image: url("/images/air_orange.png")
+	background-image: url("../images/air_orange.png")
 }

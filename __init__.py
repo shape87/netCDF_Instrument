@@ -20,5 +20,3 @@
 # fn = lambda x : x**(df/2-1) * np.exp(-1 * x)
 # #print 1 / (2**(32/2) * factorial(32/2, True)) *
 # print 1 / (2**(df/2) * factorial(df/2, True) * np.trapz(fn))
-from scipy.stats import chi2
-print chi2.ppf(1-.05, 32)

@@ -61,7 +61,11 @@ def get_flags(fname, ds):
 
 def get_time(fname, ds):
     """Get the time array from the netCDF at fname"""
-    return get_variable_data(fname, 'time' , ds)
+    
+    if fname.find('wind') == -1:
+        return get_variable_data(fname, 'time' , ds)
+    else:
+        return get_variable_data(fname, 'time' , ds, 1)
 
 def get_datetimes(fname, ds):
     '''Gets the time array and then converts them to date times'''
@@ -119,7 +123,7 @@ def get_device_depth(fname, ds):
     return get_global_attribute(fname, 'device_depth', ds)
 
 
-def get_variable_data(query, variable_name, ds):
+def get_variable_data(query, variable_name, ds, step=100):
     """Get the values of a variable from a netCDF file."""
 #     myDict = {}
 #     
@@ -144,8 +148,11 @@ def get_variable_data(query, variable_name, ds):
    
     var = ds[variable_name]
     
-#     if variable_name in ['latitude', 'longitude']:
-    return var[:]
+    if variable_name in ['latitude', 'longitude']:
+        return var[:]
+    
+    size = var.shape[0] - 1
+    return np.array(open_dods('%s.dods?%s[0:%d:%d]' % (query, variable_name, step, size))[variable_name])
     
 #     space = np.linspace(0,var.shape[0],21).astype(np.int)
 #     idx = []

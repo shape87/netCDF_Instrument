@@ -123,6 +123,7 @@ class StormOptions(StormData):
         self.stats = Stats()
         self.sea_query = None
         self.air_query = None
+        self.step = 100
         
     def get_datasets(self):
         if self.sea_fname is not None:
@@ -209,8 +210,8 @@ class StormOptions(StormData):
                 self.air_time = self.extract_time(self.air_fname, self.ads)
                 
                 self.raw_water_level = nc.get_variable_data(self.sea_fname
-                                                            , 'unfiltered_water_surface_height_above_reference_datum', self.sds)
-                self.interpolated_air_pressure = nc.get_variable_data(self.sea_fname, 'air_pressure', self.ads)
+                                                            , 'unfiltered_water_surface_height_above_reference_datum', self.sds,self.step)
+                self.interpolated_air_pressure = nc.get_variable_data(self.sea_fname, 'air_pressure', self.ads,self.step)
                 
                 time_intersect = np.intersect1d(self.sea_time, self.air_time)
                 self.sea_query = np.where((self.sea_time >= time_intersect[0]) & (self.sea_time <= time_intersect[-1]))
@@ -334,7 +335,7 @@ class StormOptions(StormData):
             self.get_surge_sea_pressure()
             
             if self.from_water_level_file:
-                self.surge_water_level = nc.get_variable_data(self.sea_fname, "water_surface_height_above_reference_datum", self.sds)[self.sea_query]
+                self.surge_water_level = nc.get_variable_data(self.sea_fname, "water_surface_height_above_reference_datum", self.sds, self.step)[self.sea_query]
             else:
                 self.surge_water_level = np.array(self.derive_filtered_water_level(self.surge_sea_pressure, 
                                                                       self.sea_pressure_mean, 
@@ -605,4 +606,5 @@ class StormOptions(StormData):
         self.stats = Stats()
         self.sea_query = None
         self.air_query = None
+        self.step = 100
         

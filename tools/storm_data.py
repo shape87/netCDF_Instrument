@@ -58,12 +58,11 @@ class StormData(object):
         return [(180-(270-np.arctan2(y,x)*180/np.pi)%360)%360 for x, y in zip(u,v)]
     
     def extract_wind_u(self, fname):
-        return nc.get_variable_data(fname, 'u', self.wds)
+        return nc.get_variable_data(fname, 'u', self.wds, 1)
     
     def extract_wind_v(self, fname):
-        return nc.get_variable_data(fname, 'v', self.wds)
+        return nc.get_variable_data(fname, 'v', self.wds, 1)
     
-
     def interpolate_air_pressure(self, sea_time, air_time, raw_air_pressure):
         return np.interp(sea_time, air_time, raw_air_pressure,
                              left=np.NaN, right=np.NaN)

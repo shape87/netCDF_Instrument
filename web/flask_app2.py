@@ -62,11 +62,11 @@ def process_data(so, s, e, dst, timezone, step, data_type=None, fs=4):
     e_index = find_index(adjusted_times, float(milli2))
     
     #slice data by the index
-    adjusted_times = adjusted_times[s_index:e_index:step]
-    so.raw_water_level = so.raw_water_level[s_index:e_index:step]
-    so.surge_water_level = so.surge_water_level[s_index:e_index:step]
-    so.wave_water_level = so.wave_water_level[s_index:e_index:step]
-    so.interpolated_air_pressure = so.interpolated_air_pressure[s_index:e_index:step]
+    adjusted_times = adjusted_times[s_index:e_index]
+    so.raw_water_level = so.raw_water_level[s_index:e_index]
+    so.surge_water_level = so.surge_water_level[s_index:e_index]
+    so.wave_water_level = so.wave_water_level[s_index:e_index]
+    so.interpolated_air_pressure = so.interpolated_air_pressure[s_index:e_index]
     
     if data_type is not None and data_type=="wind":
         so.sea_time = adjusted_times
@@ -376,6 +376,7 @@ def statistics():
     so.air_fname = baro_file
     so.high_cut = 1.0
     so.low_cut = 0.045
+    so.step = 1
     so.get_datasets()
     
     #temp deferring implementation of type of filter
@@ -425,6 +426,7 @@ def psd_contour():
     so.air_fname = baro_file
     so.high_cut = 1.0
     so.low_cut = 0.045
+    so.step = 1
     so.get_datasets()
     
     #temp deferring implementation of type of filter
@@ -530,4 +532,6 @@ def wind():
     return jsonify(**wind)
 
 app.secret_key = os.urandom(24)
-    
+#     
+# if __name__ == '__main__':
+#     app.run()

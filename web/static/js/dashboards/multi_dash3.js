@@ -210,12 +210,25 @@ $(function() {
 			$('#event_title').text('Hurricane Matthew: North Carolina Coast');
 			$("#start_date").val('2016/10/6 17:00');
 			$("#end_date").val('2016/10/12 12:00');
+			
+			for (var i = 0; i < dash_objects.length; i++){
+                
+                $('#'+dash_objects[i].contentId).empty();
+                dash_objects[i].contentCreated = false;
+            }       
 		}else{
 			map.setView([40.9005012512207,-73.25299682617188], 8);
 			$('#event_title').text('');
 			$('#event_title').text("Hurricane Hermine: Connecticut and New York");
 			$("#start_date").val('2016/09/01 17:00');
 			$("#end_date").val('2016/09/09 12:00');
+			
+			for (var i = 0; i < dash_objects.length; i++){
+                
+                $('#'+dash_objects[i].contentId).empty();
+                dash_objects[i].contentCreated = false;
+                  
+            }       
 		}
 		
 		//removes the pairs when changing to another event
@@ -526,9 +539,9 @@ $(function() {
 		
 		for(var i = 0; i < pairs.length; i++)
 		{
-			if(pairs[i] !== null)
+			if(pairs[i] != null)
 			{
-				if(check_exists(pairs[i].sea_id, pairs[i].air_id) === false)
+				if(check_exists(pairs[i].sea_id, pairs[i].air_id) == false)
 				{
 					lat_lng1 = get_marker('sea', pairs[i].sea_id).getLatLng();
 					lat_lng2 = get_marker('air', pairs[i].air_id).getLatLng();
@@ -950,7 +963,7 @@ $(function() {
 		
 		//I need to change this to one request for the CIDA hosted version
 		
-		ajax_post(current_pairs, 0);
+		ajax_post(current_pairs, 4);
 	});
 	
 	var ajax_post = function(pairs, post_errors)
@@ -1210,6 +1223,7 @@ $(function() {
 		color_air[color_index] = -1;
 		
 		apply_markers(map, stations);
+		apply_paths(map);
 		pair_count--;
 	});
 	

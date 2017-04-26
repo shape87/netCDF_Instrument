@@ -59,13 +59,11 @@ def get_flags(fname, ds):
     return get_variable_data(fname, 'pressure_qc', ds)
 
 
-def get_time(fname, ds):
+def get_time(fname, ds, step):
     """Get the time array from the netCDF at fname"""
     
-    if fname.find('wind') == -1:
-        return get_variable_data(fname, 'time' , ds)
-    else:
-        return get_variable_data(fname, 'time' , ds, 1)
+    return get_variable_data(fname, 'time' , ds, step)
+   
 
 def get_datetimes(fname, ds):
     '''Gets the time array and then converts them to date times'''
@@ -152,7 +150,9 @@ def get_variable_data(query, variable_name, ds, step=100):
         return var[:]
     
     size = var.shape[0] - 1
+   
     return np.array(open_dods('%s.dods?%s[0:%d:%d]' % (query, variable_name, step, size))[variable_name])
+    
     
 #     space = np.linspace(0,var.shape[0],21).astype(np.int)
 #     idx = []

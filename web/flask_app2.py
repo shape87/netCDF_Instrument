@@ -1,5 +1,5 @@
 import os
-from flask import Flask, render_template, request, jsonify, send_from_directory, session
+from flask import Flask, render_template, request, jsonify, send_from_directory
 import numpy as np
 import unit_conversion as uc
 import pytz
@@ -532,6 +532,3 @@ def wind():
     return jsonify(**wind)
 
 app.secret_key = os.urandom(24)
-#     
-# if __name__ == '__main__':
-#     app.run()

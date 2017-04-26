@@ -20,10 +20,8 @@ class StormData(object):
         self.ads = None
         self.wds= None
         
-   
-    
-    def extract_time(self, fname, ds):
-        return nc.get_time(fname, ds)
+    def extract_time(self, fname, ds, step=100):
+        return nc.get_time(fname, ds, step)
     
     def convert_formatted_time(self, time_data, tzinfo, daylight_savings):
         '''Converts ms to date time objects and formats to desired timezone'''
@@ -141,6 +139,7 @@ class StormData(object):
         #to adjust the units of the wave height calculations
         wave_height_funcs = ['H1/3', 'H10%', 'H1%', 'Median', 'RMS', 'Maximum', 'Average']
         
+        print(len(t_chunks), len(p_chunks))
         for x in range(0,len(t_chunks)):
             
             elevation = np.mean(elev_chunks[x])

@@ -138,7 +138,7 @@ class StormOptions(StormData):
         
     def get_sea_time(self):
         if self.sea_time is None:
-            self.sea_time = self.extract_time(self.sea_fname, self.sds)
+            self.sea_time = self.extract_time(self.sea_fname, self.sds, self.step)
             
         return self.sea_time
     
@@ -152,12 +152,12 @@ class StormOptions(StormData):
     
     def get_air_time(self):
         if self.air_time is None:
-            self.air_time = self.extract_time(self.air_fname, self.ads)
+            self.air_time = self.extract_time(self.air_fname, self.ads, self.step)
             
     #focus
     def get_wind_time(self):
         if self.wind_time is None:
-            self.wind_time = self.extract_time(self.wind_fname, self.wds) 
+            self.wind_time = self.extract_time(self.wind_fname, self.wds, 1) 
             
     def get_salinity(self):
         if self.salinity is None:
@@ -206,20 +206,35 @@ class StormOptions(StormData):
                 self.slice_series()
                 self.corrected_sea_pressure = self.raw_sea_pressure - self.interpolated_air_pressure
             else:
-                self.sea_time = self.extract_time(self.sea_fname, self.sds)
-                self.air_time = self.extract_time(self.air_fname, self.ads)
+                self.sea_time = self.extract_time(self.sea_fname, self.sds, self.step)
+                self.air_time = self.extract_time(self.air_fname, self.ads, self.step)
                 
                 self.raw_water_level = nc.get_variable_data(self.sea_fname
                                                             , 'unfiltered_water_surface_height_above_reference_datum', self.sds,self.step)
-                self.interpolated_air_pressure = nc.get_variable_data(self.sea_fname, 'air_pressure', self.ads,self.step)
+              
+                self.interpolated_air_pressure = nc.get_variable_data(self.air_fname, 'air_pressure', self.ads,self.step)
                 
-                time_intersect = np.intersect1d(self.sea_time, self.air_time)
-                self.sea_query = np.where((self.sea_time >= time_intersect[0]) & (self.sea_time <= time_intersect[-1]))
-                self.sea_time = self.sea_time[self.sea_query]
-                self.raw_water_level = self.raw_water_level[self.sea_query]
+                if self.sea_time[-1] > self.air_time[-1] and self.sea_time[0] < self.air_time[0]:
+                    self.sea_query = np.where((self.sea_time <= self.air_time[-1]) & (self.sea_time >= self.air_time[0]))
+                elif self.sea_time[-1] > self.air_time[-1]:
+                    self.sea_query = np.where(self.sea_time <= self.air_time[-1])
+                elif self.sea_time[0] < self.air_time[0]:
+                    self.sea_query = np.where(self.sea_time >= self.air_time[0])
                 
-                self.air_query = np.where((self.air_time >= time_intersect[0]) & (self.air_time <= time_intersect[-1]))
-                self.interpolated_air_pressure = self.interpolated_air_pressure[self.air_query]
+                if self.air_time[-1] > self.sea_time[-1] and self.air_time[0] > self.sea_time[0]:
+                    self.air_query = np.where((self.air_time <= self.sea_time[-1]) & (self.air_time >= self.sea_time[0]))
+                if self.air_time[-1] > self.sea_time[-1]:  
+                    self.air_query = np.where(self.air_time <= self.sea_time[-1])
+                if self.air_time[0] > self.sea_time[0]:  
+                    self.air_query = np.where(self.air_time >= self.sea_time[0])
+                
+                if self.sea_query is not None:
+                    self.sea_time = self.sea_time[self.sea_query]
+                    self.raw_water_level = self.raw_water_level[self.sea_query]
+               
+                    
+                if self.air_query is not None:
+                    self.interpolated_air_pressure = self.interpolated_air_pressure[self.air_query]
               
                 self.sensor_orifice_elevation = np.array(self.extract_sensor_orifice_elevation(self.sea_fname, \
                                             len(self.sea_time)))
@@ -335,7 +350,13 @@ class StormOptions(StormData):
             self.get_surge_sea_pressure()
             
             if self.from_water_level_file:
-                self.surge_water_level = nc.get_variable_data(self.sea_fname, "water_surface_height_above_reference_datum", self.sds, self.step)[self.sea_query]
+                
+                self.surge_water_level = nc.get_variable_data(self.sea_fname, "water_surface_height_above_reference_datum", self.sds, self.step)
+           
+                if self.sea_query is not None:
+                    self.surge_water_level = self.surge_water_level[self.sea_query]
+               
+                    
             else:
                 self.surge_water_level = np.array(self.derive_filtered_water_level(self.surge_sea_pressure, 
                                                                       self.sea_pressure_mean, 
